@@ -1,0 +1,13 @@
+#grpc:
+#  client:
+#    stockService:
+#      address: "static://localhost:9090"
+#      negotiationType: PLAINTEXT
+
+grpc:
+  client:
+    stockService:
+      address: 'static://localhost:9090'
+      negotiationType: PLAINTEXT
+server:
+  port: 8080  # Client REST UI on 8080

@@ -1,0 +1,200 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <title>🔥 Live Trading - Bidirectional gRPC</title>-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">-->
+<!--</head>-->
+<!--<body class="bg-dark text-light">-->
+<!--<div class="container mt-5">-->
+<!--    <h1 class="text-center mb-4">🔥 Live Trading Dashboard</h1>-->
+<!--    <div class="row">-->
+<!--        <div class="col-md-4">-->
+<!--            <button class="btn btn-success w-100 mb-3" onclick="startTrading('trader1')">Start Trading</button>-->
+<!--            <div id="orderBook" class="border p-3 bg-black rounded" style="height: 400px; overflow-y: auto;"></div>-->
+<!--        </div>-->
+<!--        <div class="col-md-8">-->
+<!--            <canvas id="orderChart" height="400"></canvas>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
+<!--<script>-->
+<!--    let eventSource, chart;-->
+<!--    function startTrading(userId) {-->
+<!--        eventSource = new EventSource(`/api/live/trading/${userId}`);-->
+<!--        const orderBook = document.getElementById('orderBook');-->
+
+<!--        eventSource.onmessage = (event) => {-->
+<!--            const status = JSON.parse(event.data);-->
+<!--            const orderDiv = document.createElement('div');-->
+<!--            orderDiv.className = `p-2 mb-2 rounded ${status.status === 'EXECUTED' ? 'bg-success' : 'bg-danger'}`;-->
+<!--            orderDiv.innerHTML = `-->
+<!--                    <strong>${status.orderId}</strong> | ${status.status}<br>-->
+<!--                    <small>${status.timestamp}</small>-->
+<!--                `;-->
+<!--            orderBook.insertBefore(orderDiv, orderBook.firstChild);-->
+<!--        };-->
+<!--    }-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <title>🔥 Live Trading - Bidirectional gRPC</title>-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">-->
+<!--</head>-->
+<!--<body class="bg-dark text-light">-->
+<!--<div class="container mt-5">-->
+<!--    <h1 class="text-center mb-4">🔥 Live Trading Dashboard</h1>-->
+<!--    <div class="row">-->
+<!--        <div class="col-md-4">-->
+<!--            <button class="btn btn-success w-100 mb-3" onclick="startTrading('trader1')">Start Trading</button>-->
+<!--            <div id="orderBook" class="border p-3 bg-black rounded" style="height: 400px; overflow-y: auto;">-->
+<!--                <div class="text-muted text-center mt-3">Click "Start Trading" to begin...</div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="col-md-8">-->
+<!--            <div class="alert alert-info">-->
+<!--                <strong>Status:</strong> <span id="connectionStatus">Disconnected</span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<script>-->
+<!--    let eventSource;-->
+
+<!--    function startTrading(userId) {-->
+<!--        if (eventSource) eventSource.close();-->
+
+<!--        eventSource = new EventSource(`/api/live/trading/${userId}`);-->
+<!--        const orderBook = document.getElementById('orderBook');-->
+<!--        const statusSpan = document.getElementById('connectionStatus');-->
+
+<!--        statusSpan.textContent = 'Connecting...';-->
+
+<!--        eventSource.onopen = () => {-->
+<!--            statusSpan.textContent = 'Live ✅';-->
+<!--            orderBook.innerHTML = '<div class="text-success text-center">Connected! Waiting for orders...</div>';-->
+<!--        };-->
+
+<!--        eventSource.onmessage = (event) => {-->
+<!--            try {-->
+<!--                const status = JSON.parse(event.data);-->
+<!--                console.log('Received:', status); // Debug in console-->
+
+<!--                const orderDiv = document.createElement('div');-->
+<!--                orderDiv.className = `p-2 mb-2 rounded small ${status.status === 'EXECUTED' ? 'bg-success text-white' : 'bg-danger text-white'}`;-->
+<!--                orderDiv.innerHTML = `-->
+<!--                        <strong>${status.orderId}</strong>-->
+<!--                        <span class="badge ${status.status === 'EXECUTED' ? 'bg-success' : 'bg-danger'} ms-2">${status.status}</span><br>-->
+<!--                        <small class="opacity-75">${new Date(status.timestamp).toLocaleTimeString()}</small>-->
+<!--                    `;-->
+<!--                orderBook.insertBefore(orderDiv, orderBook.firstChild);-->
+
+<!--                // Keep only last 20 orders-->
+<!--                while (orderBook.children.length > 20) {-->
+<!--                    orderBook.removeChild(orderBook.lastChild);-->
+<!--                }-->
+<!--            } catch (e) {-->
+<!--                console.error('Parse error:', event.data, e);-->
+<!--                orderBook.innerHTML += `<div class="p-2 mb-2 bg-warning text-dark">Parse error: ${event.data.substring(0, 100)}...</div>`;-->
+<!--            }-->
+<!--        };-->
+
+<!--        eventSource.onerror = (error) => {-->
+<!--            statusSpan.textContent = 'Error ❌';-->
+<!--            console.error('SSE Error:', error);-->
+<!--        };-->
+<!--    }-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🔥 Live Trading - Bidirectional gRPC</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-dark text-light">
+<!-- Your existing HTML unchanged -->
+<div class="container mt-5">
+    <h1 class="text-center mb-4">🔥 Live Trading Dashboard</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <button class="btn btn-success w-100 mb-3" onclick="startTrading('trader1')">Start Trading</button>
+            <div id="orderBook" class="border p-3 bg-black rounded" style="height: 500px; overflow-y: auto;">
+                <div class="text-muted text-center mt-3">Click "Start Trading" to begin...</div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="alert alert-info">
+                <strong>Status:</strong> <span id="connectionStatus">Disconnected</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PASTE THE NEW SCRIPT ABOVE HERE -->
+
+<script>
+    let eventSource;
+
+    function startTrading(userId) {
+        if (eventSource) eventSource.close();
+
+        eventSource = new EventSource(`/api/live/trading/${userId}`);
+        const orderBook = document.getElementById('orderBook');
+        const statusSpan = document.getElementById('connectionStatus');
+
+        statusSpan.textContent = 'Connecting...';
+
+        eventSource.onopen = () => {
+            statusSpan.textContent = 'Live ✅';
+            orderBook.innerHTML = '<div class="text-success text-center">Connected! Waiting for orders...</div>';
+        };
+
+        eventSource.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                console.log('Full order:', data); // Debug in console
+
+                const orderDiv = document.createElement('div');
+                orderDiv.className = `p-3 mb-3 rounded shadow-sm small ${data.status === 'EXECUTED' ? 'bg-success bg-opacity-75 text-white' : 'bg-danger bg-opacity-75 text-white'}`;
+                orderDiv.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <strong class="me-2">${data.orderId}</strong>
+                        <span class="badge fs-6 ${data.status === 'EXECUTED' ? 'bg-success' : 'bg-danger'}">${data.status}</span>
+                    </div>
+                    <div class="row g-1 text-start">
+                        <div class="col-6"><small>📈 ${data.stockSymbol}</small></div>
+                        <div class="col-6"><small>Qty: ${data.quantity}</small></div>
+                        <div class="col-6"><small>💰 $${data.price.toFixed(2)}</small></div>
+                        <div class="col-6"><small>${data.orderType}</small></div>
+                    </div>
+                    <div class="mt-1"><small class="opacity-75">${new Date(data.timestamp).toLocaleTimeString()}</small></div>
+                `;
+                orderBook.insertBefore(orderDiv, orderBook.firstChild);
+
+                // Keep last 15 orders
+                while (orderBook.children.length > 15) {
+                    orderBook.removeChild(orderBook.lastChild);
+                }
+            } catch (e) {
+                console.error('Parse error:', e);
+            }
+        };
+
+        eventSource.onerror = (error) => {
+            statusSpan.textContent = 'Error ❌';
+            console.error('SSE Error:', error);
+        };
+    }
+</script>
+
+
+</body>
+</html>

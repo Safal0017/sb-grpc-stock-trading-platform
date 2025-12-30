@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>4.0.1</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.learning</groupId>
+	<artifactId>stock-trading-client</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>stock-trading-client</name>
+	<description>Demo project for Spring Boot</description>
+	<url/>
+	<licenses>
+		<license/>
+	</licenses>
+	<developers>
+		<developer/>
+	</developers>
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
+<!--	<properties>-->
+<!--		<java.version>17</java.version>-->
+<!--		<grpc.version>1.65.1</grpc.version>-->
+<!--		<protobuf-java.version>4.33.1</protobuf-java.version>-->
+<!--		<spring-grpc.version>1.0.0</spring-grpc.version>-->
+<!--	</properties>-->
+<!--	<dependencies>-->
+<!--		<dependency>-->
+<!--			<groupId>io.grpc</groupId>-->
+<!--			<artifactId>grpc-services</artifactId>-->
+<!--		</dependency>-->
+
+<!--&lt;!&ndash;		Added Dependency&ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>net.devh</groupId>-->
+<!--			<artifactId>grpc-client-spring-boot-starter</artifactId>-->
+<!--			<version>2.15.0.RELEASE</version>-->
+<!--		</dependency>-->
+
+<!--		&lt;!&ndash; gRPC Dependencies &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>io.grpc</groupId>-->
+<!--			<artifactId>grpc-netty-shaded</artifactId>-->
+<!--			<version>${grpc.version}</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>io.grpc</groupId>-->
+<!--			<artifactId>grpc-protobuf</artifactId>-->
+<!--			<version>${grpc.version}</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>io.grpc</groupId>-->
+<!--			<artifactId>grpc-stub</artifactId>-->
+<!--			<version>${grpc.version}</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>io.grpc</groupId>-->
+<!--			<artifactId>grpc-census</artifactId>-->
+<!--			<version>${grpc.version}</version>-->
+<!--		</dependency>-->
+<!--		&lt;!&ndash; Protobuf Java &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>com.google.protobuf</groupId>-->
+<!--			<artifactId>protobuf-java</artifactId>-->
+<!--			<version>${protobuf-java.version}</version>-->
+<!--		</dependency>-->
+
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.grpc</groupId>-->
+<!--			<artifactId>spring-grpc-spring-boot-starter</artifactId>-->
+<!--		</dependency>-->
+
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-test</artifactId>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
+<!--&lt;!&ndash;		<dependency>&ndash;&gt;-->
+<!--&lt;!&ndash;			<groupId>org.springframework.grpc</groupId>&ndash;&gt;-->
+<!--&lt;!&ndash;			<artifactId>spring-grpc-test</artifactId>&ndash;&gt;-->
+<!--&lt;!&ndash;			<scope>test</scope>&ndash;&gt;-->
+<!--&lt;!&ndash;		</dependency>&ndash;&gt;-->
+<!--	</dependencies>-->
+<!--	<dependencyManagement>-->
+<!--		<dependencies>-->
+<!--			<dependency>-->
+<!--				<groupId>org.springframework.grpc</groupId>-->
+<!--				<artifactId>spring-grpc-dependencies</artifactId>-->
+<!--				<version>${spring-grpc.version}</version>-->
+<!--				<type>pom</type>-->
+<!--				<scope>import</scope>-->
+<!--			</dependency>-->
+<!--		</dependencies>-->
+<!--	</dependencyManagement>-->
+
+	<properties>
+		<java.version>17</java.version>
+		<grpc.version>1.65.1</grpc.version>
+		<protobuf-java.version>4.33.1</protobuf-java.version>
+	</properties>
+
+	<dependencies>
+		<!-- ONLY this - includes everything compatible -->
+		<dependency>
+			<groupId>net.devh</groupId>
+			<artifactId>grpc-client-spring-boot-starter</artifactId>
+			<version>2.15.0.RELEASE</version>
+		</dependency>
+
+		<!-- Spring Boot base -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+
+		<!-- Test only -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- FIX: Match server's protobuf version for compilation -->
+		<dependency>
+			<groupId>com.google.protobuf</groupId>
+			<artifactId>protobuf-java</artifactId>
+			<version>4.33.1</version>
+		</dependency>
+
+		<!-- FIX: Add grpc-stub for blockingV2UnaryCall method -->
+		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-stub</artifactId>
+			<version>1.77.0</version>
+		</dependency>
+
+<!--		For UI-->
+
+		<!--		Web Dependency-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>  <!-- For HTML templates -->
+		</dependency>
+
+<!--		&lt;!&ndash; Protobuf JSON utility (this replaces JsonFormat) &ndash;&gt;-->
+		<dependency>
+			<groupId>com.google.protobuf</groupId>
+			<artifactId>protobuf-java-util</artifactId>
+			<version>4.33.1</version>
+		</dependency>
+
+	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.grpc</groupId>
+				<artifactId>grpc-bom</artifactId>
+				<version>${grpc.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+
+	<!--	<build>-->
+<!--		<plugins>-->
+<!--			<plugin>-->
+<!--				<groupId>io.github.ascopes</groupId>-->
+<!--				<artifactId>protobuf-maven-plugin</artifactId>-->
+<!--				<version>4.0.3</version>-->
+<!--				<configuration>-->
+<!--					<protoc>${protobuf-java.version}</protoc>-->
+<!--					<binaryMavenPlugins>-->
+<!--						<binaryMavenPlugin>-->
+<!--							<groupId>io.grpc</groupId>-->
+<!--							<artifactId>protoc-gen-grpc-java</artifactId>-->
+<!--							<version>${grpc.version}</version>-->
+<!--							<options>@generated=omit</options>-->
+<!--						</binaryMavenPlugin>-->
+<!--					</binaryMavenPlugins>-->
+<!--				</configuration>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>generate</id>-->
+<!--						<goals>-->
+<!--							<goal>generate</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
+<!--			<plugin>-->
+<!--				<groupId>org.springframework.boot</groupId>-->
+<!--				<artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--			</plugin>-->
+<!--		</plugins>-->
+<!--	</build>-->
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>kr.motd.maven</groupId>
+				<artifactId>os-maven-plugin</artifactId>
+				<version>1.7.1</version>
+				<executions>
+					<execution>
+						<id>initialize</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>detect</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.xolstice.maven.plugins</groupId>
+				<artifactId>protobuf-maven-plugin</artifactId>
+				<version>0.6.1</version>
+				<configuration>
+					<protocArtifact>com.google.protobuf:protoc:${protobuf-java.version}:exe:${os.detected.classifier}</protocArtifact>
+					<pluginId>grpc-java</pluginId>
+					<pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
+				</configuration>
+				<executions>
+					<execution>
+						<id>compile</id>
+						<goals>
+							<goal>compile</goal>
+							<goal>compile-custom</goal>
+						</goals>
+						<configuration>
+							<pluginParameter>jakarta_omit,@generated=omit</pluginParameter>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>
